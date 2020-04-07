@@ -1,0 +1,78 @@
+/* Simple browser reset */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: 16px;
+
+}
+/* Body Background Color*/
+
+body {   background: gray;
+  font-family: Arial, Helvetica, sans-serif; }
+  
+/*Header Background Color*/
+
+header {
+  background: black;   color: green;   padding: 10px 30px;
+}
+
+/* Navigation*/
+
+nav ul li {    display: inline-block; } 
+
+nav {   width: 95%;   display: inline-block;   text-align: right; } 
+
+nav ul li a {   color: white;   text-decoration: red;   display: block;   padding: 10px 15px;   border-radius: 3px;   transition: 0.5s ease all; } 
+nav ul li a:hover {   background: #444; }
+
+.one__title {   font-size: 40px;   margin: 0; color: red;
+  font-family: "Merriweather", serif; }
+  .one {
+	    min-height: 800px;   text-align: center;
+	  background-image: url("../img/Geoscience Image.png"); /* The image used */
+  height: 500px; /* ou must set a specified height */
+  background-position: center center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover ;
+   }
+
+
+/* Icon */
+
+
+#icon img {
+  width: 150px;
+  border-radius: 100px;
+  margin-right: 80px;
+  vertical-align: middle;
+  
+}
+p  {
+  animation-duration: 3s;
+  animation-name: slidein;
+  animation-iteration-count: 3;
+  animation-direction: alternate;
+}
+
+@keyframes slidein {
+  from {
+    margin-left:100%;
+    width:300%
+  }
+  
+  to {
+    margin-left:0%;
+    width:100%;
+  }
+}
+var element = document.getElementById("watchme");
+element.addEventListener("animationstart", listener, false);
+element.addEventListener("animationend", listener, false);
+element.addEventListener("animationiteration", listener, false);
+
+element.className = "slidein";
