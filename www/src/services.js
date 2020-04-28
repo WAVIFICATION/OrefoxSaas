@@ -152,7 +152,7 @@ export default function Pricing() {
       </Container>
       {/* End hero unit */}
       <Container maxWidth="md" component="main" >
-        <Grid container spacing={5} alignItems="flex-end" >
+        <Grid container spacing={5} justify="space-evenly">
           {tiers.map((tier) => (
             <Grid item key={tier.title} xs={12} md={4}>
               <Card>
