@@ -1,5 +1,4 @@
 from flask import jsonify, request, session
-import mysql.connector
 from flask_restful import Resource
 import pymysql
 import bcrypt
