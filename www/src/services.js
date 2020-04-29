@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -15,6 +15,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { getThemeProps } from '@material-ui/styles';
+import Signin from './signin'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link as link
+} from "react-router-dom";
 
 function Copyright() {
   return (
@@ -75,15 +82,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const tiers = [
-  /*
-  {
-    title: 'Trial',
-    price: '0',
-    description: ['1 user', '20 MB of storage', 'Email Alert System', 'Email support'],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'contained',
-  },
-  */
+  
   {
     title: 'Standard',
     price: '15',
@@ -116,11 +115,41 @@ const footers = [
   },
 ];
 
+
+
 export default function Pricing() {
   const classes = useStyles();
 
-  return (
-    <React.Fragment>
+
+  const [error, setError] = React.useState(null);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [items, setItems] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("https://api.example.com/items")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setItems(result.items);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+  }, [])
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <React.Fragment>
       <CssBaseline />
       <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
@@ -135,10 +164,11 @@ export default function Pricing() {
               Services
             </Link>
           </nav>
-          <Button href="#" color="primary" variant="outlined" className={classes.link}>
-            Log out
+          <Button href="#" color="primary" variant="outlined" className={classes.link}> 
+            Log In  
           </Button>
         </Toolbar>
+        
       </AppBar>
       {/* Hero unit */}
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
@@ -152,7 +182,7 @@ export default function Pricing() {
       </Container>
       {/* End hero unit */}
       <Container maxWidth="md" component="main" >
-        <Grid container spacing={5} alignItems="flex-end" >
+        <Grid container spacing={5} justify="space-evenly">
           {tiers.map((tier) => (
             <Grid item key={tier.title} xs={12} md={4}>
               <Card>
@@ -181,7 +211,7 @@ export default function Pricing() {
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} color="primary" href="https://google.com">
+                  <Button fullWidth variant={tier.buttonVariant} color="primary" href>
                     {tier.buttonText}
                   </Button>
                 </CardActions>
@@ -217,4 +247,11 @@ export default function Pricing() {
       {/* End footer */}
     </React.Fragment>
   );
+      
+  }
 }
+
+
+  
+
+ 

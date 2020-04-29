@@ -7,12 +7,18 @@ import NavBar from './navbar.js'
 import Signin from './signin.js'
 import Signup from './signup.js'
 import Services from './services.js'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 class App extends Component {
   render(){
     return(
       <div>
-        <Services/>
+        <Signup/>
       </div>
     )
   }
