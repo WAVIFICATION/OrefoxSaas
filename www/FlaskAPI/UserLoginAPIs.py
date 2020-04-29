@@ -6,9 +6,6 @@ import bcrypt
 
 
 class Signin(Resource):
-    def get(self):
-        return "First get api"
-
     def post(self):
         salt = bcrypt.gensalt()
         json_data = request.get_json(force=True)
@@ -16,7 +13,6 @@ class Signin(Resource):
         if all(item in json_data for item in must_list):
             json_data["password"]=bcrypt.hashpw(json_data["password"].encode('utf-8'), salt)
             json_data["password"]=json_data["password"].decode('utf-8')
-            print()
             try:
                 db= Database()
                 db.Insert_user_data(json_data)
@@ -26,6 +22,11 @@ class Signin(Resource):
             return True
         else:
             return False
+class TestAPI(Resource):
+    def get(self):
+        return str(request)
+    def post(self:
+        return str(request))
 
 
 class Database:
