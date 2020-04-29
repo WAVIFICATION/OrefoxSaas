@@ -25,8 +25,8 @@ class Signin(Resource):
 class TestAPI(Resource):
     def get(self):
         return str(request)
-    def post(self:
-        return str(request))
+    def post(self):
+        return str(request)
 
 
 class Database:
