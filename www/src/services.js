@@ -120,34 +120,6 @@ const footers = [
 export default function Pricing() {
   const classes = useStyles();
 
-
-  const [error, setError] = React.useState(null);
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const [items, setItems] = React.useState([]);
-
-  React.useEffect(() => {
-    fetch("https://api.example.com/items")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result.items);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
-  }, [])
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
     return (
       <React.Fragment>
       <CssBaseline />
@@ -165,7 +137,7 @@ export default function Pricing() {
             </Link>
           </nav>
           <Button href="#" color="primary" variant="outlined" className={classes.link}> 
-            Log In  
+          <Link href="/signin">Login</Link> 
           </Button>
         </Toolbar>
         
@@ -176,8 +148,7 @@ export default function Pricing() {
           Services
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" component="p">
-          Quickly build an effective pricing table for your potential customers with this layout.
-          It&apos;s built with default Material-UI components with little customization.
+          
         </Typography>
       </Container>
       {/* End hero unit */}
@@ -211,7 +182,7 @@ export default function Pricing() {
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} color="primary" href>
+                  <Button fullWidth variant={tier.buttonVariant} color="primary" href="/signup">
                     {tier.buttonText}
                   </Button>
                 </CardActions>
@@ -220,7 +191,7 @@ export default function Pricing() {
           ))}
         </Grid>
       </Container>
-      {/* Footer */}
+      {/* Footer }
       <Container maxWidth="md" component="footer" className={classes.footer}>
         <Grid container spacing={4} justify="space-evenly">
           {footers.map((footer) => (
@@ -249,7 +220,7 @@ export default function Pricing() {
   );
       
   }
-}
+
 
 
   

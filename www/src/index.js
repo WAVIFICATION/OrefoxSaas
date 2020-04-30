@@ -1,13 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import './index.css';
 import App from './App';
+import Signin from './signin'
 import * as serviceWorker from './serviceWorker';
+import Signup from './signup';
 
-ReactDOM.render(
+
+
+const routing = (
+  <Router>
+    <div>
+      <Route exact path="/" component={App} />
+      <Route path="/signin" component={Signin} />
+      <Route path="/signup" component={Signup}/>
+    </div>
+  </Router>
+)
+
+
+
+
+
+ReactDOM.render(routing,
+  /*
   <React.StrictMode>
     <App />
   </React.StrictMode>,
+  */
+
   document.getElementById('root')
 );
 

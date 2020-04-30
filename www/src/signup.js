@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import  { Redirect } from 'react-router-dom'
+import Signin from './signin'
 
 function Copyright() {
   return (
@@ -25,7 +27,7 @@ function Copyright() {
     </Typography>
   );
 }
-
+/*
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -38,18 +40,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', 
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
+*/
 
 export default class Signup extends Component{
   constructor(props){
     super(props)
+    
     this.classes = makeStyles((theme) => ({
       paper: {
         marginTop: theme.spacing(8),
@@ -62,15 +65,16 @@ export default class Signup extends Component{
         backgroundColor: theme.palette.secondary.main,
       },
       form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(3),
       },
       submit: {
         margin: theme.spacing(3, 0, 2),
       },
     }));
-
-    this.state={ name:"", email:"" }
+    
+    this.state={firstname:"",lastname:"",company:"",password:"", email:"" }
+    this.state={tosignin: false,errormsg:""}
   }
     handleChange = event =>{
     this.setState({ [event.target.name]:event.target.value })
@@ -78,23 +82,37 @@ export default class Signup extends Component{
     handleSubmit = event =>{
     event.preventDefault();
 
-    console.log(this.state.name)
-    console.log( this.state.email)
+    console.log(this.state.firstName)
+    console.log(this.state.lastName)
+    console.log(this.state.email)
+    console.log(this.state.company)
 
-    const url = "/api/TestAPI"
-    const data = { name:this.state.name, email:this.state.email }
-    fetch(url, { method: "POST", // or ‘PUT’
-    body: JSON.stringify(data), // data can be `string` or {object}!
-    headers:{ "Content-Type": "application/json" } })
-    .then(res => res.json())
+    const url = "http://54.252.132.199/api/SignUp"
+    const data = { fname:this.state.firstName, lname:this.state.lastName, company:this.state.company, password:this.state.password,
+      email:this.state.email }
+    fetch("https://cors-anywhere.herokuapp.com/"+url, { 
+    method: "POST", 
+    body: JSON.stringify(data), 
+    redirect:"follow",
+    headers:{ 
+    "Content-Type": "application/json" } })
+    .then(res => res.json(data))
     .catch(error => console.error("Error:", error))
-    .then(response => console.log("Success:", response)); }
+    .then(response => {console.log(response);if (response===true) { this.setState(() => ({
+      tosignin: true}));
+  }else {this.setState(() => ({
+    errormsg: "Incomplete"}));} })}
   
   
 
   render(){
+    if (this.state.tosignin === true) {
+      return <Redirect to='/signin' />}
     return (
+      
+      
       <Container component="main" maxWidth="xs">
+        
         <CssBaseline />
         <div className={this.classes.paper}>
           <Avatar className={this.classes.avatar}>
@@ -147,6 +165,18 @@ export default class Signup extends Component{
                   variant="outlined"
                   required
                   fullWidth
+                  name="company"
+                  label="Company"
+                  id="company"
+                  autoComplete="company"
+                  onChange={this.handleChange}
+                />
+                </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"
@@ -155,6 +185,7 @@ export default class Signup extends Component{
                   onChange={this.handleChange}
                 />
               </Grid>
+              <h3>{this.state.errormsg}</h3>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -174,7 +205,7 @@ export default class Signup extends Component{
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
