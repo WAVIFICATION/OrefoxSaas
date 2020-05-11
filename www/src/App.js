@@ -13,12 +13,16 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Dashboard from './dashboard.js'
+import DropzoneDialogExample from './dropzone.js'
+import Projects from './projects.js'
+import FormDialog from './dialogInput'
 
 class App extends Component {
   render(){
     return(
       <div>
-        <Services/>
+        <Projects/>
       </div>
     )
   }
