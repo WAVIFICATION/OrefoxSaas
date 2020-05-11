@@ -105,3 +105,15 @@ class Database:
             return False
         else:
             return result[0]['FileID']
+    def add_random_string(self, email, rand_string):
+        row_count=self.cur.execute("UPDATE UserData SET random_string='"+rand_string+"' WHERE email='"+email+"';")
+        self.con.commit()
+        if(row_count == 0):
+            return False
+        return True
+    def reset_password(self, rand_string, password):
+        row_count=self.cur.execute("UPDATE UserData SET password_hash='"+password+"', random_string=NULL WHERE  random_string='"+rand_string+"';")
+        self.con.commit()
+        if(row_count == 0):
+            return False
+        return True
