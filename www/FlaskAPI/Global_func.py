@@ -1,5 +1,9 @@
 import pymysql
 from flask import jsonify, request, session
+import random
+import os
+import string
+from pathlib import Path
 
 
 def mustlist(jsondata, mustlst):
@@ -14,6 +18,15 @@ def CheckUser():
         return values
     else:
         return False
+
+
+def generatefilename(path, N, extension):
+    new_file_name = ''.join(random.choices(
+        string.ascii_uppercase + string.digits, k=N))+extension
+    while Path(os.path.join(path, new_file_name)).is_file():
+        new_file_name = ''.join(random.choices(
+            string.ascii_uppercase + string.digits, k=N))+extension
+    return new_file_name
 
 
 class Database:
@@ -105,15 +118,45 @@ class Database:
             return False
         else:
             return result[0]['FileID']
+
     def add_random_string(self, email, rand_string):
-        row_count=self.cur.execute("UPDATE UserData SET random_string='"+rand_string+"' WHERE email='"+email+"';")
+        row_count = self.cur.execute(
+            "UPDATE UserData SET random_string='"+rand_string+"' WHERE email='"+email+"';")
         self.con.commit()
         if(row_count == 0):
             return False
         return True
+
     def reset_password(self, rand_string, password):
-        row_count=self.cur.execute("UPDATE UserData SET password_hash='"+password+"', random_string=NULL WHERE  random_string='"+rand_string+"';")
+        row_count = self.cur.execute("UPDATE UserData SET password_hash='" +
+                                     password+"', random_string=NULL WHERE  random_string='"+rand_string+"';")
         self.con.commit()
         if(row_count == 0):
             return False
         return True
+
+    def save_to_db_report(self, projectName, fileid, uid, operation, reportname):
+        row_count = self.cur.execute(
+            "SELECT ProjectID FROM Project WHERE Uid='{}' AND ProjectName ='{}'".format(uid, projectName))
+        self.con.commit()
+        result = self.cur.fetchall()
+        print("INSERT INTO Reports (FileID, ProjectID, Uid, ReportID, Operation) VALUES ('{}','{}','{}','{}','{}');".format(
+            fileid, result[0]['ProjectID'], uid, reportname, operation))
+        row_count = self.cur.execute("INSERT INTO Reports (FileID, ProjectID, Uid, ReportID, Operation) VALUES ('{}','{}','{}','{}','{}');".format(
+            fileid, result[0]['ProjectID'], uid, reportname, operation))
+
+        self.con.commit()
+
+    def list_reports(self, uid):
+        row_count = self.cur.execute(
+            "SELECT ProjectName,OriginalName,Operation,ReportID FROM ((Reports INNER JOIN Project ON Reports.ProjectID = Project.ProjectID) INNER JOIN Files ON Reports.FileID=Files.FileID) where Reports.Uid='{}'".format(uid))
+        self.con.commit()
+        result = self.cur.fetchall()
+        return result
+    def user_allowed_to_view(self,uid,reportname):
+        row_count = self.cur.execute("SELECT * FROM Reports where Uid='{}' and ReportID='{}'".format(uid,reportname))
+        self.con.commit()
+        if  row_count==0:
+            return False
+        else:
+            return True

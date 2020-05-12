@@ -7,12 +7,12 @@ import string
 from pathlib import Path
 from os.path import dirname, abspath
 PATH = 'Project_and_user_Files'
-
+REPORT_PATH='Reports'
 
 class CreateProject(Resource):
     def post(self):
         if CheckUser() == False:
-            return
+            return False
         json_data = request.get_json(force=True)
         if mustlist(json_data, ['ProjectName']) and len(json_data['ProjectName']) < 200:
             try:
@@ -30,7 +30,7 @@ class CreateProject(Resource):
 class ListProjects(Resource):
     def get(self):
         if CheckUser() == False:
-            return
+            return False
         listOfProjects = []
         try:
             db = Database()
@@ -44,7 +44,7 @@ class ListProjects(Resource):
 class UploadFile(Resource):
     def post(self, ProjectName):
         if CheckUser() == False:
-            return
+            return False
         if 'file' not in request.files:
             return False
         file = request.files['file']
@@ -72,7 +72,7 @@ class UploadFile(Resource):
 class ListFiles(Resource):
     def get(self, ProjectName):
         if CheckUser() == False:
-            return
+            return False
         if ProjectName and ProjectName != '':
             db = Database()
             result = db.get_list_of_files(ProjectName, session['uid'])
@@ -86,7 +86,7 @@ class ListFiles(Resource):
 class DownloadFile(Resource):
     def get(self, ProjectName, FileName):
         if CheckUser() == False:
-            return
+            return False
         if ProjectName and FileName and ProjectName != '' and FileName != '':
             db = Database()
             result = db.is_User_Allowed_To_Access_File(
@@ -98,3 +98,49 @@ class DownloadFile(Resource):
                 d = dirname(dirname(abspath(__file__)))
                 path = os.path.join(d, PATH)
                 return send_file(os.path.join(path, result), as_attachment=True, attachment_filename=FileName)
+
+class ListProjectFiles(Resource):
+    def get(self):
+        if CheckUser() == False:
+            return False
+        listOfProjects = []
+        Dict_project_files={}
+        try:
+            db = Database()
+            listOfProjects = db.list_Projects(session['uid'])
+            for ProjectName in listOfProjects:
+                result = db.get_list_of_files(ProjectName, session['uid'])
+                Dict_project_files[ProjectName]=result
+            db.end_connection()
+        except:
+            return False
+        return Dict_project_files
+
+
+class ListReports(Resource):
+    def get(self):
+        if CheckUser() == False:
+            return False
+        try:
+            db = Database()
+            result=db.list_reports(session['uid'])
+            db.end_connection()
+        except:
+            return False
+        return result
+class ViewReport(Resource):
+    def get(self,imageName):
+        if CheckUser() == False:
+            return False
+        try:
+            db = Database()
+            result=db.user_allowed_to_view(session['uid'],imageName)
+            db.end_connection()
+        except:
+            return False
+        if result == False:
+            return False
+        else:
+            d = dirname(dirname(abspath(__file__)))
+            path = os.path.join(d, REPORT_PATH)
+            return send_file(os.path.join(path, imageName), as_attachment=False)

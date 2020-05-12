@@ -1,8 +1,9 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
 from FlaskAPI.UserLoginAPIs import SignUp, TestAPI, SignIn, CheckSignIn, password_recovery_api_endpoint, ResetPassword
-from FlaskAPI.ProjectAPIs import CreateProject, ListProjects, UploadFile, ListFiles, DownloadFile
+from FlaskAPI.ProjectAPIs import CreateProject, ListProjects, UploadFile, ListFiles, DownloadFile, ListProjectFiles, ListReports, ViewReport
 from flask_mail import Mail, Message
+from FlaskAPI.AnalyticsAPIs import AnalyticsAPI
 app = Flask(__name__)
 api = Api(app)
 app.secret_key="fvdfjhvb fdhvfdvljfdnvjfdnv;kdfjnv"
@@ -42,6 +43,10 @@ api.add_resource(ListFiles, '/api/ListFiles/<string:ProjectName>')
 api.add_resource(DownloadFile, '/api/DownloadFile/<string:ProjectName>/<string:FileName>')
 api.add_resource(ForgotPassword, '/api/ForgotPassword')
 api.add_resource(ResetPassword, '/api/ResetPassword')
+api.add_resource(AnalyticsAPI, '/api/AnalyticsAPI')
+api.add_resource(ListProjectFiles, '/api/ListProjectFiles')
+api.add_resource(ListReports, '/api/ListReports')
+api.add_resource(ViewReport, '/api/ViewReport/<string:imageName>')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
