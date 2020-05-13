@@ -15,6 +15,7 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
 
 const rows = [
   createData(0, '1 May, 2020', 'Project-1', 'Drill Correlation Map', 'assays.csv',),
+  createData(0, '1 May, 2020', 'Project-1', 'Drill Correlation Map', 'assays.csv',)
 ];
 
 function preventDefault(event) {

@@ -7,6 +7,7 @@ import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from "@material-ui/core/styles";
+import FormDialog from './dialogInput';
 
 
 
@@ -49,6 +50,7 @@ class DropzoneDialogExample extends Component {
         this.setState({
             open: true,
         });
+        
     }
  
     render() {

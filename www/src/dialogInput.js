@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
+import DropzoneDialogExample from './dropzone'
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 
 
@@ -20,31 +22,53 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(2),
       },
     absolute: {
-        position: 'absolute',
-        bottom: theme.spacing(2),
-        right: theme.spacing(12),
+        top:theme.spacing(0.5),
+        bottom: theme.spacing(10),
+        right: theme.spacing(2),
       },
   }));
   
 export default function FormDialog() {
   const classes = useStyles();  
   const [open, setOpen] = React.useState(false);
+  const [ProjectName,setProjectName]=React.useState("")
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const url = "http://54.252.132.199/api/CreateProject"
+  const data =  {ProjectName:ProjectName}
+    
+
+  const handleOpen = () => {
+    fetch(url, { 
+      method: "POST", 
+      body: JSON.stringify(data), 
+      redirect:"follow",
+      headers:{ 
+      "Content-Type": "application/json" } })
+      .then(res => res.json(data))
+      .then(res=>console.log(res));
     setOpen(false);
+    console.log(ProjectName)
+      
   };
+  const handleClose = (e) => {
+    setOpen(false);
+    
+  };
+  
+
 
   return (
     <div>
-        <Tooltip title="Add" aria-label="add" onClick={handleClickOpen}>
-            <Fab color="secondary" aria-label="edit" className={classes.absolute}>
-                <EditIcon />
+       <Tooltip title="Add" aria-label="add" onClick={handleClickOpen}>
+            <Fab color="primary" aria-label="edit" className={classes.absolute}>
+                <AddIcon />
             </Fab>
-        </Tooltip>
+        </Tooltip> 
+        
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Details</DialogTitle>
         <DialogContent>
@@ -58,6 +82,7 @@ export default function FormDialog() {
             label="Project Name"
             type="text"
             fullWidth
+            onChange={e=>setProjectName(e.target.value)}
           />
           
         </DialogContent>
@@ -65,9 +90,11 @@ export default function FormDialog() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Link to="/">
+          <Button onClick={handleOpen} color="primary">
             Confirm
           </Button>
+          </Link>
         </DialogActions>
       </Dialog>
     </div>
