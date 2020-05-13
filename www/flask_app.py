@@ -1,11 +1,13 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
-from FlaskAPI.UserLoginAPIs import SignUp, TestAPI, SignIn, CheckSignIn, password_recovery_api_endpoint, ResetPassword
+from FlaskAPI.UserLoginAPIs import SignUp, TestAPI, SignIn, CheckSignIn, password_recovery_api_endpoint, ResetPassword, SignOut
 from FlaskAPI.ProjectAPIs import CreateProject, ListProjects, UploadFile, ListFiles, DownloadFile, ListProjectFiles, ListReports, ViewReport
 from flask_mail import Mail, Message
 from FlaskAPI.AnalyticsAPIs import AnalyticsAPI
+from flask_cors import CORS
 app = Flask(__name__)
 api = Api(app)
+cors = CORS(app)
 app.secret_key="fvdfjhvb fdhvfdvljfdnvjfdnv;kdfjnv"
 app.config.update(
 	MAIL_SERVER='smtp.yandex.com',
@@ -47,6 +49,7 @@ api.add_resource(AnalyticsAPI, '/api/AnalyticsAPI')
 api.add_resource(ListProjectFiles, '/api/ListProjectFiles')
 api.add_resource(ListReports, '/api/ListReports')
 api.add_resource(ViewReport, '/api/ViewReport/<string:imageName>')
+api.add_resource(SignOut, '/api/SignOut')
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0",ssl_context='adhoc')

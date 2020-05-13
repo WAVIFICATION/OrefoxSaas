@@ -110,4 +110,7 @@ class ResetPassword(Resource):
                 if row_count==True:
                     return True
             return False
+class SignOut(Resource):
+    def get(self):
+        session.clear()
             
