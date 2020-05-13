@@ -3,7 +3,10 @@ from flask_restful import Resource
 import pymysql
 import bcrypt
 import json
-from .Global_func import Database, CheckUser
+from .Global_func import Database, CheckUser, mustlist
+import random
+import os
+import string
 
 
 class SignUp(Resource):
@@ -46,6 +49,12 @@ class SignIn(Resource):
             except:
                 return False
             try:
+                db = Database()
+                expected_pswd = db.Get_user_cred(json_data["email"])
+                db.end_connection()
+            except:
+                return False
+            try:
                 expected_pswd = expected_pswd[0]
             except:
                 return False
@@ -64,3 +73,41 @@ class SignIn(Resource):
 class CheckSignIn(Resource):
     def get(self):
         return CheckUser()
+
+def password_recovery_api_endpoint(json_data):
+    if CheckUser() == True:
+        return False
+    else:
+        if mustlist(json_data, ['email']):
+            N=24
+            rand_str=''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+            try:
+                db = Database()
+                row_count = db.add_random_string(json_data["email"],rand_str)
+                db.end_connection()
+            except:
+                return False
+            return rand_str
+        else:
+            return False
+
+class ResetPassword(Resource):
+    def post(self):
+        if CheckUser() == True:
+            return False
+        else:
+            json_data = request.get_json(force=True)
+            salt = bcrypt.gensalt()
+            if mustlist(json_data, ['password','rand_str']):
+                json_data["password"] = bcrypt.hashpw(json_data["password"].encode('utf-8'), salt)
+                json_data["password"] = json_data["password"].decode('utf-8')
+                try:
+                    db = Database()
+                    row_count = db.reset_password(json_data["rand_str"],json_data["password"])
+                    db.end_connection()
+                except:
+                    return False
+                if row_count==True:
+                    return True
+            return False
+            
