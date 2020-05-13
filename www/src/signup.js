@@ -92,7 +92,7 @@ export default class Signup extends Component{
     const url = "http://54.252.132.199/api/SignUp"
     const data = { fname:this.state.firstName, lname:this.state.lastName, company:this.state.company, password:this.state.password,
       email:this.state.email }
-    fetch("https://cors-anywhere.herokuapp.com/"+url, { 
+    fetch(url, { 
     method: "POST", 
     body: JSON.stringify(data), 
     redirect:"follow",
@@ -110,8 +110,6 @@ export default class Signup extends Component{
     if (this.state.tosignin === true) {
       return <Redirect to='/signin' />}
     return (
-      
-      
       <Container component="main" maxWidth="xs">
         
         <CssBaseline />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,28 +23,40 @@ import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
 import { mainListItems } from './projectListItems';
 /*import Chart from './Chart';*/
-import Deposits from './Deposits';
+
 import ProjectTable from './projectTable';
 import DropzoneDialogExample from './dropzone.js'
+import Button from '@material-ui/core/Button';
 import FormDialog from './dialogInput'
-
+import { withStyles } from "@material-ui/core/styles";
 
 function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://orefox.com/">
-        Orefox
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+    return (
+      <Typography variant="body2" color="textSecondary" align="center" >
+        {'Copyright © '}
+        <Link color="inherit" href="https://orefox.com/">
+          Orefox
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
+  root1:{
+    
+  },
+  header:{
+    textAlign:"center",
+    paddingTop:theme.spacing(30),
+  },
+  fab: {
+    margin: theme.spacing(2),
+  },
   root: {
     display: 'flex',
   },
@@ -121,18 +133,133 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-}));
+});
+
+
+class Projects extends Component{
+  constructor(props){
+    super(props)
+    this.state={onState:false,open:true,pname:"",ProjectName:""}
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({open:true});
+  };
+
+  handleDrawerCloes = () => {
+    this.setState({open:false});
+  };
+
+  handleClickOpen = () => {
+    this.setState({onState:true});
+  };
+
+  handleClose = () => {
+    this.setState({open:true});
+  };
+
+  handleClose = () => {
+    this.setState({open:false});
+  };
+
+  
+
+  
+
+  render(){
+    const {open} = this.state
+    const { classes } = this.props;
+    let fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    return(
+      <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={this.handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            DashBoard
+            <FormDialog/>
+          </Typography>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        classes={{
+          
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+        </div>
+        <Divider />
+        <List>{mainListItems}</List>
+      </Drawer>
+      <main className={classes.content}>
+      <div className={classes.appBarSpacer} />
+
+      {/* Conditional Rendering Part Goes here */}
+      
+
+
+      <Box pt={4}>
+          <Copyright />
+      </Box>
+      </main>
+    </div>
+
+    )
+  }
+}
+
+export default withStyles(styles, { withTheme: true })(Projects);
+
+/*
 
 export default function Projects() {
   const classes = useStyles();
+  const [onState,setONState] =React.useState(false)
   const [open, setOpen] = React.useState(true);
+  const [pname, setPname]= React.useState('')
+  const [ProjectName,setProjectName]=React.useState('')
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const handleOpen=()=>{
+    setONState(true)
+
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    
+  };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+    
+  
 
   return (
     <div className={classes.root}>
@@ -149,7 +276,8 @@ export default function Projects() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Projects
+            DashBoard
+            <FormDialog/>
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -174,22 +302,24 @@ export default function Projects() {
         <List>{mainListItems}</List>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <ProjectTable />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-          <FormDialog/>
-          <DropzoneDialogExample/>
-        </Container>
+      <div className={classes.appBarSpacer} />
+
+     
+      
+
+
+      <Box pt={4}>
+          <Copyright />
+      </Box>
       </main>
     </div>
+    
   );
 }
+
+*/
+
+
+
+
+

@@ -6,17 +6,24 @@ import App from './App';
 import Signin from './signin'
 import * as serviceWorker from './serviceWorker';
 import Signup from './signup';
+import ProjectTable from './projectTable'
+import Projects from './projects'
 
 
 
 const routing = (
-  <Router>
-    <div>
-      <Route exact path="/" component={App} />
-      <Route path="/signin" component={Signin} />
-      <Route path="/signup" component={Signup}/>
-    </div>
-  </Router>
+  <div>
+    <Router>
+    
+    <Route exact path="/" component={App} />
+    <Route path="/signin" component={Signin} />
+    <Route path="/signup" component={Signup}/>
+    <Route path="/projects" component={Projects}/>
+    <Route path="/projectTable" component={ProjectTable}/>
+  
+    </Router>
+  </div>
+  
 )
 
 
