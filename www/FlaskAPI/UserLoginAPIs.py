@@ -31,14 +31,14 @@ class SignUp(Resource):
 
 class TestAPI(Resource):
     def get(self):
-        return str(request.get_json(force=True))
+        return str(request.get_json(force=True))+session['email']
 
     def post(self):
-        return str(request.get_json(force=True))
+        return str(request.get_json(force=True))+session['email']
 
 
 class SignIn(Resource):
-    def get(self):
+    def post(self):
         json_data = request.get_json(force=True)
         must_list = ["email", "password"]
         if all(item in json_data for item in must_list):
@@ -59,6 +59,7 @@ class SignIn(Resource):
             except:
                 return False
             if bcrypt.checkpw(json_data["password"].encode('utf-8'), expected_pswd["password_hash"].encode('utf-8')):
+                session.permanent=True
                 session["email"] = json_data["email"]
                 session["name"] = expected_pswd["firstname"] + \
                     " "+expected_pswd["lastname"]

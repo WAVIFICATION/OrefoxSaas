@@ -66,10 +66,13 @@ class Signin extends Component{
     
       handleSubmit = event => {
         event.preventDefault()
-        const url = "http://54.252.132.199/api/SignIn"
+        const url = "/api/SignIn"
         const data={email:this.state.email,password:this.state.password}
           fetch(url, { 
             method: "POST", 
+            // credentials: "include",
+            mode: 'cors',
+            credentials: 'include',
             body: JSON.stringify(data),
             redirect:"follow",
             headers:{ 

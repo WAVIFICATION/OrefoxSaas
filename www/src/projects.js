@@ -25,6 +25,7 @@ import { mainListItems } from './projectListItems';
 /*import Chart from './Chart';*/
 
 import ProjectTable from './projectTable';
+import ReportsTable from './ReportsTable'
 import DropzoneDialogExample from './dropzone.js'
 import Button from '@material-ui/core/Button';
 import FormDialog from './dialogInput'
@@ -212,9 +213,8 @@ class Projects extends Component{
       <div className={classes.appBarSpacer} />
 
       {/* Conditional Rendering Part Goes here */}
-      
-
-
+      <ProjectTable></ProjectTable>
+      <ReportsTable></ReportsTable>
       <Box pt={4}>
           <Copyright />
       </Box>

@@ -19,7 +19,7 @@ const styles = theme => ({
   },
 });
 
-class ProjectTable extends Component {
+class ReportsTable extends Component {
   constructor(props){
     super(props)
     this.state={
@@ -27,12 +27,12 @@ class ProjectTable extends Component {
     }
   }
   componentDidMount() {
-    fetch('/api/ListProjectFiles')
+    fetch('/api/ListReports')
       .then(response => response.json())
       .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
   }
-   FileDownload(Projectname, filename){
-     fetch('/api/DownloadFile/'+Projectname+'/'+filename)
+   FileDownload(filename){
+     fetch('/api/ViewReport/'+filename)
      .then(response => {
       response.blob().then(blob => {
         let url = window.URL.createObjectURL(blob);
@@ -49,20 +49,24 @@ class ProjectTable extends Component {
   return (
     <React.Fragment>
     <br></br>
-      <Title>Project List</Title>
+      <Title>Reports List</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Project Name</TableCell>
-            <TableCell>Files</TableCell>
+            <TableCell>File</TableCell>
+            <TableCell>Operation</TableCell>
+            <TableCell>Report</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {projectData.map((row) => (
             <TableRow >
               <TableCell>{row.ProjectName}</TableCell>
-              <a onClick={() => this.FileDownload(row.ProjectName,row.File)}>
-              <TableCell>{row.File}</TableCell>
+              <TableCell>{row.OriginalName}</TableCell>
+              <TableCell>{row.Operation}</TableCell>
+              <a onClick={() => this.FileDownload(row.ReportID)}>
+              <TableCell>{row.ReportID}</TableCell>
               </a>
             </TableRow>
           ))}
@@ -73,4 +77,4 @@ class ProjectTable extends Component {
   );
 }
 }
-export default withStyles(styles, { withTheme: true })(ProjectTable);
+export default withStyles(styles, { withTheme: true })(ReportsTable);

@@ -7,14 +7,17 @@ from FlaskAPI.AnalyticsAPIs import AnalyticsAPI
 from flask_cors import CORS
 app = Flask(__name__)
 api = Api(app)
-cors = CORS(app)
+cors = CORS(app,supports_credentials=True)
 app.secret_key="fvdfjhvb fdhvfdvljfdnvjfdnv;kdfjnv"
 app.config.update(
 	MAIL_SERVER='smtp.yandex.com',
 	MAIL_PORT=465,
 	MAIL_USE_SSL=True,
 	MAIL_USERNAME = 'orefoxsaas@yandex.com',
-	MAIL_PASSWORD = 'Project123'
+	MAIL_PASSWORD = 'Project123',
+    SESSION_COOKIE_SAMESITE = 'None',
+    SESSION_REFRESH_EACH_REQUEST = True,
+    SESSION_COOKIE_NAME= 'Orefox',
 	)
 mail = Mail(app)
 class ForgotPassword(Resource):
@@ -52,4 +55,4 @@ api.add_resource(ViewReport, '/api/ViewReport/<string:imageName>')
 api.add_resource(SignOut, '/api/SignOut')
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",ssl_context='adhoc')
+    app.run(host="0.0.0.0")

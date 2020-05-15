@@ -37,7 +37,7 @@ export default function FormDialog() {
     setOpen(true);
   };
 
-  const url = "http://54.252.132.199/api/CreateProject"
+  const url = "/api/CreateProject"
   const data =  {ProjectName:ProjectName}
     
 
@@ -90,11 +90,11 @@ export default function FormDialog() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Link to="/">
+          {/* <Link to="/"> */}
           <Button onClick={handleOpen} color="primary">
             Confirm
           </Button>
-          </Link>
+          {/* </Link> */}
         </DialogActions>
       </Dialog>
     </div>

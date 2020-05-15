@@ -104,13 +104,22 @@ class ListProjectFiles(Resource):
         if CheckUser() == False:
             return False
         listOfProjects = []
-        Dict_project_files={}
+        Dict_project_files=[]
         try:
             db = Database()
             listOfProjects = db.list_Projects(session['uid'])
             for ProjectName in listOfProjects:
                 result = db.get_list_of_files(ProjectName, session['uid'])
-                Dict_project_files[ProjectName]=result
+                for row in result:
+                    Dict_project_files.append({
+                        "ProjectName":ProjectName,
+                        "File":row
+                    })
+                if len(result)==0:
+                    Dict_project_files.append({
+                        "ProjectName":ProjectName,
+                        "File":[]
+                    })
             db.end_connection()
         except:
             return False
