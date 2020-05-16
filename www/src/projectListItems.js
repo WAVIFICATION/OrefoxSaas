@@ -9,6 +9,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 export const mainListItems = (
   <div>
@@ -24,6 +25,13 @@ export const mainListItems = (
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Accounts" />
+    </ListItem>
+
+    <ListItem button>
+      <ListItemIcon>
+        <AssessmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reports" />
     </ListItem>
    
   </div>

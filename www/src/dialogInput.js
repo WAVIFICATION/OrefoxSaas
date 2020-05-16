@@ -63,12 +63,12 @@ export default function FormDialog() {
 
   return (
     <div>
-       <Tooltip title="Add" aria-label="add" onClick={handleClickOpen}>
-            <Fab color="primary" aria-label="edit" className={classes.absolute}>
-                <AddIcon />
-            </Fab>
-        </Tooltip> 
-        
+        <Tooltip title="Add New Project" aria-label="add" onClick={handleClickOpen}>
+        <Fab variant="extended" size="small">
+  <AddIcon className={classes.extendedIcon} />
+  New Project
+</Fab>
+        </Tooltip>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Details</DialogTitle>
         <DialogContent>

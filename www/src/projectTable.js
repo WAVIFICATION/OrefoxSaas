@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { withStyles } from "@material-ui/core/styles";
+import SimpleMenu from './ServicesMenu';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -55,6 +56,7 @@ class ProjectTable extends Component {
           <TableRow>
             <TableCell>Project Name</TableCell>
             <TableCell>Files</TableCell>
+            <TableCell> Operation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

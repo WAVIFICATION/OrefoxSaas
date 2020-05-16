@@ -10,14 +10,14 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -30,6 +30,7 @@ import DropzoneDialogExample from './dropzone.js'
 import Button from '@material-ui/core/Button';
 import FormDialog from './dialogInput'
 import { withStyles } from "@material-ui/core/styles";
+import Logout from './LogOut'
 
 function Copyright() {
     return (
@@ -187,13 +188,16 @@ class Projects extends Component{
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             DashBoard
-            <FormDialog/>
+           
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+            
+            <FormDialog/>
+            </IconButton>
+            <Logout/>
+              
+          
+          
         </Toolbar>
       </AppBar>
       <Drawer
