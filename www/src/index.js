@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import Signup from './signup';
 import ProjectTable from './projectTable'
 import Projects from './projects'
+import PasswordReset from './PasswordReset'
 
 
 
@@ -20,6 +21,7 @@ const routing = (
     <Route path="/signup" component={Signup}/>
     <Route path="/projects" component={Projects}/>
     <Route path="/projectTable" component={ProjectTable}/>
+    <Route path="/passwordReset" component={PasswordReset}/>
   
     </Router>
   </div>
