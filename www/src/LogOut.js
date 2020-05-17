@@ -5,22 +5,29 @@ import {Button} from "semantic-ui-react";
 
 class Logout extends Component {
     state = {
-        navigate: false
+        navigate: false,
+        loading: false
     };
    logout = () => {
        localStorage.clear("token"
        );
        this.setState({navigate:true});
+       fetch("/api/SignOut")
+       .then(Response=>Response.json())
+       .then(Response=>console.log(Response))
+       .then(this.setState({loading:true}))
    };
 
    render(){
-       const {navigate} = this.state;
-        
-        if(navigate)
+       const {loading} = this.state;
+    
+        if(loading)
         {
             return <Redirect to="/" push={true}/>
         }
-        return <Button onClick={this.logout}> Log out </Button>;
+        return(
+            <Button onClick={this.logout}> Log out </Button>
+        ) 
 
     
    }

@@ -17,14 +17,14 @@ import {
 import DropzoneDialogExample from './dropzone.js'
 import Projects from './projects.js'
 import FormDialog from './dialogInput'
-import DropzoneDialog1 from './rough'
-import NestedMenu from './fileUpload'
+import NestedMenu from './rough'
+import FormDialog1 from './fileUpload'
 
 class App extends Component {
   render(){
     return(
       <div>
-        <DropzoneDialog1/>
+        <Services/>
       </div>
     )
   }

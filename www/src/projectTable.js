@@ -27,10 +27,20 @@ class ProjectTable extends Component {
       projectData:[]
     }
   }
+
+  reload(){
+    console.log("entering")
+    fetch('/api/ListProjectFiles')
+      .then(response => response.json())
+      .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
+      
+  }
+  
   componentDidMount() {
     fetch('/api/ListProjectFiles')
       .then(response => response.json())
       .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
+      
   }
    FileDownload(Projectname, filename){
      fetch('/api/DownloadFile/'+Projectname+'/'+filename)
@@ -50,7 +60,7 @@ class ProjectTable extends Component {
   return (
     <React.Fragment>
     <br></br>
-      <Title>Project List</Title>
+      <Title>Project List <button onclick={this.reload}>Reload</button></Title>
       <Table size="small">
         <TableHead>
           <TableRow>

@@ -31,6 +31,7 @@ import Button from '@material-ui/core/Button';
 import FormDialog from './dialogInput'
 import { withStyles } from "@material-ui/core/styles";
 import Logout from './LogOut'
+import FormDialog1 from './fileUpload'
 
 function Copyright() {
     return (
@@ -191,7 +192,7 @@ class Projects extends Component{
            
           </Typography>
           <IconButton color="inherit">
-            
+            <FormDialog1/>
             <FormDialog/>
             </IconButton>
             <Logout/>
