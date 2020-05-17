@@ -8,8 +8,10 @@ class Logout extends Component {
         navigate: false
     };
    logout = () => {
-       localStorage.clear("token"
-       );
+    const url='/api/SignOut'
+    fetch(url, { 
+        method: "GET"})
+       localStorage.clear("token");
        this.setState({navigate:true});
    };
 
@@ -18,7 +20,7 @@ class Logout extends Component {
         
         if(navigate)
         {
-            return <Redirect to="/" push={true}/>
+            return <Redirect to="/signin" push={true}/>
         }
         return <Button onClick={this.logout}> Log out </Button>;
 

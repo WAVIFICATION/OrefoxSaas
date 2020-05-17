@@ -24,7 +24,7 @@ class App extends Component {
   render(){
     return(
       <div>
-        <DropzoneDialog1/>
+        <Services/>
       </div>
     )
   }

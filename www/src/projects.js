@@ -31,6 +31,7 @@ import Button from '@material-ui/core/Button';
 import FormDialog from './dialogInput'
 import { withStyles } from "@material-ui/core/styles";
 import Logout from './LogOut'
+import  { Redirect } from 'react-router-dom'
 
 function Copyright() {
     return (
@@ -163,7 +164,17 @@ class Projects extends Component{
   handleClose = () => {
     this.setState({open:false});
   };
-
+  componentWillMount() {
+    const url='/api/CheckSignIn'
+    fetch(url, { 
+      method: "GET", 
+      // credentials: "include",
+    }).then(res => res.json())
+    .catch(error => console.error("Error:", error))
+      .then(res => {console.log(res);if (res===false) { this.setState(() => ({
+        tosignin: true}));
+    } else {this.setState(() => ({
+          errormsg: "Error"}));}})}
   
 
   
@@ -172,6 +183,8 @@ class Projects extends Component{
     const {open} = this.state
     const { classes } = this.props;
     let fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    if (this.state.tosignin === true) {
+      return <Redirect to='/signin' />}
     return(
       <div className={classes.root}>
       <CssBaseline />
