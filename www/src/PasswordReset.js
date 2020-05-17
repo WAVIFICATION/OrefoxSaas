@@ -16,23 +16,7 @@ export default class PasswordReset extends Component {
  
  styles = theme => ({
      
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+ 
 });   state = {
     passChangeSuccess: false,
   }
@@ -121,15 +105,16 @@ export default class PasswordReset extends Component {
           return isSubmitting ? (
             <Spinner />
           ) : (
-            <Container component="main" maxWidth="xs" >
+            <Container  maxWidth="xs" >
                 
             <Paper className="form form--wrapper" elevation={10}>
-                <Box color="text.primary"
+                <Box m={2} color="primary.main"
+                
                borderColor="text.primary"
                 zIndex="modal">
 
               <form className="form" onSubmit={handleSubmit}>
-                <FormControl fullWidth margin="dense">
+                <FormControl fullWidth margin="dense" marginTop="dense">
                  
                     
                  
@@ -141,6 +126,7 @@ export default class PasswordReset extends Component {
                       : ''}
                   </FormHelperText>
                 </FormControl>
+                <h1>Password Reset</h1>
                 <FormControl
                   fullWidth
                   margin="dense"
@@ -149,6 +135,7 @@ export default class PasswordReset extends Component {
                 
               
                   <InputLabel
+                  
                     htmlFor="password-new"
                     error={Boolean(touched.newPass && errors.newPass)}
                   >
@@ -200,9 +187,9 @@ export default class PasswordReset extends Component {
                 <Button
                   type="submit"
                   variant="raised"
-                  color="primary"
+                  color='inherit'
                   disabled={Boolean(!isValid || isSubmitting)}
-                  style={{ margin: '16px' }}
+                  style={{ margin: '30px', color: 'inherit' }}
                 >
                   {'Reset'}
                 </Button>
