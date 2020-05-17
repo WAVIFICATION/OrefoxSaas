@@ -11,14 +11,14 @@ def mustlist(jsondata, mustlst):
 
 
 def CheckUser():
-    # if "email" in session:
-    #     values = {
-    #         "name": session["name"],
-    #         "email": session["email"]}
-    #     return values
-    # else:
-    #     return False
-    session['uid']=2
+    if "email" in session:
+        values = {
+            "name": session["name"],
+            "email": session["email"]}
+        return values
+    else:
+        return False
+    # session['uid']=2
     return True
 
 
