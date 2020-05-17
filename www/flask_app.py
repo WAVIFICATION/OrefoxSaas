@@ -21,7 +21,7 @@ app.config.update(
 	)
 mail = Mail(app)
 class ForgotPassword(Resource):
-    def get(self):
+    def post(self):
         json_data = request.get_json(force=True)
         rand_str=password_recovery_api_endpoint(json_data)
         if rand_str == False:
@@ -31,7 +31,7 @@ class ForgotPassword(Resource):
                 msg = Message("Password Recovery Email- OrefoxSaaS",
                 sender="orefoxsaas@yandex.com",
                 recipients=[json_data["email"]])
-                msg.body = "Hi,\n Click link below to reset password. \n http://54.252.132.199/ResetPassword?Randstr="+rand_str+" \n Do not reply as this is an automated email. \n Regards, \nOrefoxSaaS support"           
+                msg.body = "Hi,\n Click link below to reset password. \n http://localhost:3000/passwordReset?Randstr="+rand_str+" \n Do not reply as this is an automated email. \n Regards, \nOrefoxSaaS support"           
                 mail.send(msg)
                 return True
             except:

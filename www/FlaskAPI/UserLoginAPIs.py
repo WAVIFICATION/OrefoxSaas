@@ -31,10 +31,10 @@ class SignUp(Resource):
 
 class TestAPI(Resource):
     def get(self):
-        return str(request.get_json(force=True))+session['email']
+        return str(request.get_json(force=True))
 
     def post(self):
-        return str(request.get_json(force=True))+session['email']
+        return str(request.get_json(force=True))
 
 
 class SignIn(Resource):

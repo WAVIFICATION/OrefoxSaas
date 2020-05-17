@@ -3,29 +3,18 @@
   .form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
-    
+    height: 90%;
+   
+    margin-top: 60px ;
     margin-left: 210px 210px;
     margin-right: 210px 210px;
    
   }
   
-  .form--wrapper {
-    margin-left: 210px 210px;
-    margin-right: 210px 210px;
-   
-    align-self: center;
-  }
+ 
   
-  .form--error {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 0%;
-  }
-  .container {
-    align-items:  center ;
-    padding:5px;
-  }
+  
+  
