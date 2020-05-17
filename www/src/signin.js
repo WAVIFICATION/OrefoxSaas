@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import  { Redirect } from 'react-router-dom'
 import Projects from './projects'
 import { withStyles } from "@material-ui/core/styles";
+import EmailValidation from "./EmailValidation";
+
 
 function Copyright() {
   return (
@@ -142,10 +144,9 @@ class Signin extends Component{
           </Button>
           <Grid container>
             <Grid item xs>
+               
+      <a href="/EmailValidation">Forgot Password &nbsp;&nbsp;</a>
               
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
             </Grid>
             <Grid item>
               <Link href="/signup" variant="body2">
