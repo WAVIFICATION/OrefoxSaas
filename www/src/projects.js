@@ -32,7 +32,7 @@ import FormDialog from './dialogInput'
 import { withStyles } from "@material-ui/core/styles";
 import Logout from './LogOut'
 import  { Redirect } from 'react-router-dom'
-
+import FileForm from './fileUpload'
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center" >
@@ -206,6 +206,7 @@ class Projects extends Component{
           <IconButton color="inherit">
             
             <FormDialog/>
+            <FileForm/>
             </IconButton>
             <Logout/>
               

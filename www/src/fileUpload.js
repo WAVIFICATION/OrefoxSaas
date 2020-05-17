@@ -60,15 +60,16 @@ const styles = theme => ({
 
 
     handleClose = (e) => {
-      this.setState={open:false};
+      this.setState({open:false});
       
     };
     handleOpen = (e) => {
-      this.setState={open:true};
+      this.setState({open:true});
       
     };
     handleClickOpen = () => {
-      this.setState={open:true};
+      this.setState({open:true});
+      console.log(this.state.open)
     };
   
   
@@ -82,7 +83,7 @@ const styles = theme => ({
       handleSave=(files)=> {
         //Saving files to state for further use and closing Modal.
         this.setState({files:files})
-        this.setState=({open:true})
+        this.setState({open:true});
     }
   
     onChangeHandler=(event)=>{
