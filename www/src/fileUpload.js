@@ -93,7 +93,7 @@ const styles = theme => ({
   
 
     componentDidMount() {
-      fetch('/api/ListProjectFiles')
+      fetch('/api/ListProject')
         .then(response => response.json())
         .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
         //this.projectData.map(name=>name.ProjectName)

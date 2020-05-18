@@ -19,6 +19,8 @@ import Projects from './projects.js'
 import FormDialog from './dialogInput'
 import NestedMenu from './rough'
 import FormDialog1 from './fileUpload'
+import FeedBack from './feedback'
+import { Feed } from 'semantic-ui-react';
 
 class App extends Component {
   render(){

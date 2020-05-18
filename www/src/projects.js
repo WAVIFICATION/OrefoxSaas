@@ -33,6 +33,9 @@ import { withStyles } from "@material-ui/core/styles";
 import Logout from './LogOut'
 import  { Redirect } from 'react-router-dom'
 import FileForm from './fileUpload'
+import FeedBack from './feedback'
+
+
 function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center" >
@@ -204,7 +207,7 @@ class Projects extends Component{
            
           </Typography>
           <IconButton color="inherit">
-            
+            <FeedBack/>
             <FormDialog/>
             <FileForm/>
             </IconButton>
