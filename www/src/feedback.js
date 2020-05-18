@@ -60,7 +60,7 @@ const styles = theme => ({
   class FeedBack extends Component{
     constructor(props){
       super(props)
-      this.state={open:false,files:[],selection:null,ProjectName:"",fullWidth:true,maxWidth:'',projectData:[],name:[],value:'Controlled'}
+      this.state={open:false,value:''}
     }
 
     handleClose = (e) => {
@@ -75,6 +75,23 @@ const styles = theme => ({
       this.setState({open:true});
       console.log(this.state.open)
     };
+    UpdateText=(event)=>{
+      this.setState({value:event.target.value});
+    }
+    
+    send_feedback=()=>{
+      const url = "/api/Feedback"
+      const data={feedback: this.state.value};
+      fetch(url, { 
+        method: "POST", 
+        body: JSON.stringify(data), 
+        redirect:"follow",
+        headers:{ 
+        "Content-Type": "application/json" } })
+        .then(res => res.json(data))
+        .then(res=>console.log(res));
+        this.setState({open:false});
+    }
   
 
     
@@ -88,7 +105,7 @@ const styles = theme => ({
             FeedBack
         </Fab>
         </Tooltip>
-      <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={this.state.open}  aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Details</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -103,6 +120,8 @@ const styles = theme => ({
           multiline
           rows={4}
           variant="filled"
+          onChange={this.UpdateText}
+          value={this.state.value}
         />
         </form>
         </div> 
@@ -115,7 +134,7 @@ const styles = theme => ({
             Cancel
           </Button>
           {/* <Link to="/"> */}
-          <Button onClick={this.handleOpen} color="primary">
+          <Button onClick={this.send_feedback} color="primary">
             Confirm
           </Button>
           {/* </Link> */}

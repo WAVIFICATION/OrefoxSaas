@@ -46,10 +46,10 @@ class UploadFile(Resource):
         if CheckUser() == False:
             return False
         if 'file' not in request.files:
-            return False
+            return 'jjg'
         file = request.files['file']
         if file.filename == '':
-            return False
+            return 'jgnbgjfbg'
         N = 20
         d = dirname(dirname(abspath(__file__)))
         path = os.path.join(d, PATH)
@@ -66,7 +66,7 @@ class UploadFile(Resource):
             return True
         else:
             db.end_connection()
-            return False
+            return 'ttttt'
 
 
 class ListFiles(Resource):

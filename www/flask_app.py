@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
-from FlaskAPI.UserLoginAPIs import SignUp, TestAPI, SignIn, CheckSignIn, password_recovery_api_endpoint, ResetPassword, SignOut
+from FlaskAPI.UserLoginAPIs import SignUp, TestAPI, SignIn, CheckSignIn, password_recovery_api_endpoint, ResetPassword, SignOut, Feedback
 from FlaskAPI.ProjectAPIs import CreateProject, ListProjects, UploadFile, ListFiles, DownloadFile, ListProjectFiles, ListReports, ViewReport
 from flask_mail import Mail, Message
 from FlaskAPI.AnalyticsAPIs import AnalyticsAPI
@@ -53,6 +53,7 @@ api.add_resource(ListProjectFiles, '/api/ListProjectFiles')
 api.add_resource(ListReports, '/api/ListReports')
 api.add_resource(ViewReport, '/api/ViewReport/<string:imageName>')
 api.add_resource(SignOut, '/api/SignOut')
+api.add_resource(Feedback, '/api/Feedback')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

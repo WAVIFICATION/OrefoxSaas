@@ -114,4 +114,17 @@ class ResetPassword(Resource):
 class SignOut(Resource):
     def get(self):
         session.clear()
+class Feedback(Resource):
+    def post(self):
+        if CheckUser() == True:
+            return False
+        else:
+            # try:
+            json_data = request.get_json(force=True)
+            db = Database()
+            row_count = db.add_feedback(session['uid'],json_data["feedback"])
+            db.end_connection()
+            # except:
+            #     return False
+            return True
             

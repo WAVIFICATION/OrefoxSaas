@@ -162,3 +162,10 @@ class Database:
             return False
         else:
             return True
+    def add_feedback(self, uid, feedback):
+        rows=self.cur.execute("INSERT INTO Feedback (FeedbackBody , Uid) VALUES ('{}','{}');".format(
+            feedback, uid))
+        self.con.commit()
+        if rows==0:
+            return False
+        return True
