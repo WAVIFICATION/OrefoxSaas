@@ -44,7 +44,7 @@ class ReportsTable extends Component {
     //     a.click();
     //   });
     // });
-    window.open('http://localhost:5000/api/ViewReport/'+filename, 'sharer', 'toolbar=0,status=0,width=548,height=325');
+    window.open('http://localhost:5000'+filename, 'sharer', 'toolbar=0,status=0,width=548,height=325');
   }
   reload=()=>{
     console.log("entering")

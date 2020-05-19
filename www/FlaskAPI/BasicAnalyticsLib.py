@@ -8,6 +8,8 @@ import seaborn as sns
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import io
+import base64
 
 def data_cleaning(df):
     df=clean_data(df)
@@ -45,3 +47,13 @@ def normalise_units(df):
             df[column] = df[column]*10000
         df.rename(columns = {column: re_1.sub("", column) }, inplace = True)
     return df
+def address_linear_regression(df):
+    return '/api/Analytic/LinearRegression', 'url'
+def linear_regression(X,Y,df):
+    f, ax = plt.subplots(figsize=(11, 9))
+    sns.lmplot(x=X, y=Y, data=df)
+    bytes_image = io.BytesIO()
+    plt.savefig(bytes_image, format='png')
+    bytes_image.seek(0)
+    my_base64_jpgData = base64.b64encode(bytes_image.read())
+    return my_base64_jpgData

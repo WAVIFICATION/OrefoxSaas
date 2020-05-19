@@ -106,7 +106,8 @@ class ProjectTable extends Component {
     const { classes } = this.props;
     const { projectData } = this.state;
     const options = [
-      ['correlation map','correlation_map']
+      ['correlation map','correlation_map'],
+      ['linear regression', 'linear_regression']
     ];
     var index=0;
   return (
@@ -135,6 +136,9 @@ class ProjectTable extends Component {
               <TableCell>
               <Button onClick={() =>this.apiCall(row.ProjectName,row.File, 'correlation_map')}>
                 Correlation Map
+              </Button>
+              <Button onClick={() =>this.apiCall(row.ProjectName,row.File, 'linear_regression')}>
+              Linear Regression
               </Button>
               </TableCell>
             </TableRow>

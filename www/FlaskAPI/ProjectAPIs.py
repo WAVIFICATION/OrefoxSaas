@@ -143,7 +143,7 @@ class ViewReport(Resource):
             return False
         try:
             db = Database()
-            result=db.user_allowed_to_view(session['uid'],imageName)
+            result=db.user_allowed_to_view(session['uid'],'/api/ViewReport/'+imageName)
             db.end_connection()
         except:
             return False
