@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { withStyles } from "@material-ui/core/styles";
+import RefreshIcon from '@material-ui/icons/Refresh';
+import { Button } from '@material-ui/core';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -32,16 +34,28 @@ class ReportsTable extends Component {
       .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
   }
    FileDownload(filename){
-     fetch('/api/ViewReport/'+filename)
-     .then(response => {
-      response.blob().then(blob => {
-        let url = window.URL.createObjectURL(blob);
-        let a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.click();
-      });
-    });
+    //  fetch('/api/ViewReport/'+filename)
+    //  .then(response => {
+    //   response.blob().then(blob => {
+    //     let url = window.URL.createObjectURL(blob);
+    //     let a = document.createElement('a');
+    //     a.href = url;
+    //     a.download = filename;
+    //     a.click();
+    //   });
+    // });
+    window.open('http://localhost:5000/api/ViewReport/'+filename, 'sharer', 'toolbar=0,status=0,width=548,height=325');
+  }
+  reload=()=>{
+    console.log("entering")
+    fetch('/api/ListReports')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ projectData:data });
+        console.log(this.state.projectData)
+      }
+    );
   }
   render(){
     const { classes } = this.props;
@@ -49,7 +63,11 @@ class ReportsTable extends Component {
   return (
     <React.Fragment>
     <br></br>
-      <Title>Reports List</Title>
+      <Title>Reports List
+      <Button onClick={this.reload}>
+      <RefreshIcon></RefreshIcon>
+      </Button>
+      </Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -66,7 +84,9 @@ class ReportsTable extends Component {
               <TableCell>{row.OriginalName}</TableCell>
               <TableCell>{row.Operation}</TableCell>
               <a onClick={() => this.FileDownload(row.ReportID)}>
-              <TableCell>{row.ReportID}</TableCell>
+              <TableCell>
+              <Button>View Report</Button>
+              </TableCell>
               </a>
             </TableRow>
           ))}

@@ -9,6 +9,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import { withStyles } from "@material-ui/core/styles";
 import SimpleMenu from './ServicesMenu';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import { Button } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -24,22 +30,50 @@ class ProjectTable extends Component {
   constructor(props){
     super(props)
     this.state={
-      projectData:[]
+      projectData:[],
+      menuopen: [],
+      anchorEl: null
     }
   }
 
-  reload(){
+  reload=()=>{
     console.log("entering")
     fetch('/api/ListProjectFiles')
       .then(response => response.json())
-      .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
+      .then(data => {
+        console.log(data);
+        this.setState({ projectData:data });
+        console.log(this.state.projectData)
+      }
+    );
       
+  }
+  menuopenfun=(event, index)=>{
+    this.setState({ anchorEl: event.currentTarget});
+//     this.setState({ 
+//       menuopen : this.state.menuopen.map((item, j) => {
+//        if (j === index) {
+//          return true;
+//        } else {
+//          return item;
+//        }
+//  })
+// });
+  }
+  menuclosefun=()=>{
+    this.setState({ menuopen: false });
   }
   
   componentDidMount() {
     fetch('/api/ListProjectFiles')
       .then(response => response.json())
-      .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
+      .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)
+      // for(var i=0;i<Object.keys(data).length;i++)
+      // {
+      //   this.state.menuopen.push(false);
+      // }
+      // console.log(this.state.menuopen)
+    });
       
   }
    FileDownload(Projectname, filename){
@@ -54,13 +88,35 @@ class ProjectTable extends Component {
       });
     });
   }
+  apiCall=( project, file, operation)=>{
+    fetch('/api/AnalyticsAPI',{ 
+      method: "POST", 
+      body: JSON.stringify({
+        'projectName':project,
+        'fileName': file,
+        'operation': operation
+      }), 
+      redirect:"follow",
+      headers:{ 
+      "Content-Type": "application/json" } })
+      .then(response => response.json())
+      .then(data => {console.log(data)});
+  }
   render(){
     const { classes } = this.props;
     const { projectData } = this.state;
+    const options = [
+      ['correlation map','correlation_map']
+    ];
+    var index=0;
   return (
     <React.Fragment>
     <br></br>
-      <Title>Project List <button onclick={this.reload}>Reload</button></Title>
+      <Title>Project List
+      <Button onClick={this.reload}>
+      <RefreshIcon></RefreshIcon>
+      </Button>
+      </Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -76,6 +132,11 @@ class ProjectTable extends Component {
               <a onClick={() => this.FileDownload(row.ProjectName,row.File)}>
               <TableCell>{row.File}</TableCell>
               </a>
+              <TableCell>
+              <Button onClick={() =>this.apiCall(row.ProjectName,row.File, 'correlation_map')}>
+                Correlation Map
+              </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

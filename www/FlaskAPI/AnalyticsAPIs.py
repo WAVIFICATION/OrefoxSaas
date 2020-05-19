@@ -15,7 +15,7 @@ operationMapping={
 }
 
 class AnalyticsAPI(Resource):
-    def get(self):
+    def post(self):
         if CheckUser() == False:
             return False
         json_data = request.get_json(force=True)

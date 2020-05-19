@@ -169,3 +169,6 @@ class Database:
         if rows==0:
             return False
         return True
+    def list_all_user_files_projects():
+        row_count = self.cur.execute("SELECT * FROM Reports where Uid='{}' and ReportID='{}'".format(uid,reportname))
+        self.con.commit()
