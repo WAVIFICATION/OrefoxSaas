@@ -49,14 +49,17 @@ const styles = theme => ({
 class Dash extends Component{
     constructor(props){
         super(props)
-        this.state=({projectData:[]})
+        this.state=({projectData:[],feedbacks:[]})
     }
 
     componentDidMount() {
-        fetch('/api/ListProjectFiles')
+        fetch('/api/private/ListUserProjects')
           .then(response => response.json())
           .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
           
+          fetch('/api/private/ListFeedbacks')
+          .then(response=>response.json())
+          .then(dato=> {this.setState({ feedbacks:dato });console.log(this.state.feedbacks)})
       }
        FileDownload(Projectname, filename){
          fetch('/api/DownloadFile/'+Projectname+'/'+filename)
@@ -74,6 +77,7 @@ class Dash extends Component{
     render(){
         const { classes } = this.props;
         const { projectData } = this.state;
+        const { feedbacks } = this.state;
         return(
             <React.Fragment>
                 <CssBaseline />
@@ -91,14 +95,12 @@ class Dash extends Component{
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-            {/*
-            
-            */}
                                 {projectData.map((row) => (
                             <TableRow >
+                            <TableCell>{row.email}</TableCell>
                             <TableCell>{row.ProjectName}</TableCell>
                             <a onClick={() => this.FileDownload(row.ProjectName,row.File)}>
-                            <TableCell>{row.File}</TableCell>
+                            <TableCell>{row.OriginalName}</TableCell>
                              </a>
                             </TableRow>
                             ))}
@@ -122,11 +124,11 @@ class Dash extends Component{
             {/*
             
             */}
-          {projectData.map((row) => (
+          {feedbacks.map((row) => (
             <TableRow >
-              <TableCell>{row.ProjectName}</TableCell>
-              <a onClick={() => this.FileDownload(row.ProjectName,row.File)}>
-              <TableCell>{row.File}</TableCell>
+              <TableCell>{row.email}</TableCell>
+              <a onClick={() => this.FileDownload(row.email,row.FeedbackBody)}>
+              <TableCell>{row.FeedbackBody}</TableCell>
               </a>
             </TableRow>
           ))}
@@ -137,29 +139,7 @@ class Dash extends Component{
                 </Grid>
                 <Grid item xs={12} md={4} lg={11} className={classes.grid}>
                     <Paper className={classes.paper}>
-                    <TableContainer className={classes.container}>
-                    <Table size="small">
-        <TableHead>
-          <TableRow>
-          <TableCell>Number of Projects</TableCell>
-            <TableCell>Expected Revenue</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-            {/*
-            
-            */}
-          {projectData.map((row) => (
-            <TableRow >
-              <TableCell>{row.ProjectName}</TableCell>
-              <a onClick={() => this.FileDownload(row.ProjectName,row.File)}>
-              <TableCell>{row.File}</TableCell>
-              </a>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      </TableContainer> 
+                    
                     </Paper>
                 </Grid>
                 </Grid>
