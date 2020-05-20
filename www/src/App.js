@@ -21,6 +21,7 @@ import NestedMenu from './rough'
 import FormDialog1 from './fileUpload'
 import FeedBack from './feedback'
 import { Feed } from 'semantic-ui-react';
+import Dash from './orefoxDash'
 
 class App extends Component {
   render(){
