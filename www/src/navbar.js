@@ -25,6 +25,13 @@ function NavBar(props) {
                         <li>Model</li>
                     </TypoGraphy>
                 </ListItemText>
+
+                <ListItemText inset>
+                    <TypoGraphy color="inherit" variant="title">
+                        <li>FAQ</li>
+                    </TypoGraphy>
+                </ListItemText>
+
             </ListItem> 
         </List>
     )

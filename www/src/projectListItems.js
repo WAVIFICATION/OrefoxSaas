@@ -10,6 +10,8 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import Link from '@material-ui/core/Link';
 
 export const mainListItems = (
   <div>
@@ -26,13 +28,19 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Accounts" />
     </ListItem>
-
+   
     <ListItem button>
       <ListItemIcon>
-        <AssessmentIcon />
+        <LiveHelpIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" />
+      
+      <Link  href="/FAQ" >
+      <ListItemText primary="FAQ" />
+            </Link>
     </ListItem>
    
+
+
+
   </div>
 );
