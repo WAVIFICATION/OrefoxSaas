@@ -42,6 +42,9 @@ class NumberOfProjects(Resource):
         except:
             return False
         return result
+class Check_for_Admin(Resource):
+    def get(self):
+        return CheckAdmin()
 
 def CheckAdmin():
     if "email" in session and session["uid"]==10:

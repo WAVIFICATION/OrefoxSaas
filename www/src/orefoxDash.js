@@ -24,7 +24,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import  { Redirect } from 'react-router-dom'
 
 function Copyright() {
     return (
@@ -128,6 +128,17 @@ class Dash extends Component{
     };
   
     componentDidMount() {
+        const url='/api/private/Check_for_Admin'
+        fetch(url, { 
+          method: "GET", 
+          // credentials: "include",
+        }).then(res => res.json())
+        .catch(error => console.error("Error:", error))
+          .then(res => {console.log(res);if (res===false) { this.setState(() => ({
+            tosignin: true}));
+        } else {this.setState(() => ({
+              errormsg: "Error"}));}})
+
         fetch('/api/private/ListUserProjects')
           .then(response => response.json())
           .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
@@ -154,6 +165,8 @@ class Dash extends Component{
         const { classes } = this.props;
         const { projectData } = this.state;
         const { feedbacks } = this.state;
+        if (this.state.tosignin === true) {
+          return <Redirect to='/signin' />}
         return(
           <div className={classes.root}>
       <CssBaseline />
