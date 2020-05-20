@@ -9,19 +9,42 @@ import io
 PATH = 'Project_and_user_Files'
 REPORT_PATH='Reports'
 
-class ListUserOperations(Resource):
+class ListUserProjects(Resource):
     def get(self):
+        if CheckAdmin() == False:
+            return False
         try:
             db = Database()
-            result=db.list_reports(session['uid'])
+            result=db.admin_list_project_files()
+            db.end_connection()
+        except:
+            return False
+        return result
+class ListFeedbacks(Resource):
+    def get(self):
+        if CheckAdmin() == False:
+            return False
+        try:
+            db = Database()
+            result=db.admin_list_feedbacks()
+            db.end_connection()
+        except:
+            return False
+        return result
+class NumberOfProjects(Resource):
+    def get(self):
+        if CheckAdmin() == False:
+            return False
+        try:
+            db = Database()
+            result=db.admin_number_of_projects()
             db.end_connection()
         except:
             return False
         return result
 
-
 def CheckAdmin():
-    if "email" in session and session['uid']==10:
+    if "email" in session:
         values = {
             "name": session["name"],
             "email": session["email"]}
@@ -29,4 +52,4 @@ def CheckAdmin():
     else:
         return False
     # session['uid']=2
-    return True
+    # return True
