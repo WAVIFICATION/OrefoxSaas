@@ -44,7 +44,7 @@ class NumberOfProjects(Resource):
         return result
 
 def CheckAdmin():
-    if "email" in session:
+    if "email" in session and session["uid"]==10:
         values = {
             "name": session["name"],
             "email": session["email"]}
