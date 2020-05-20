@@ -32,7 +32,7 @@ class AnalyticsAPI(Resource):
                 return False
             d = dirname(dirname(abspath(__file__)))
             path = os.path.join(d, PATH)
-            df = pd.read_csv(path+"\\"+fileID)
+            df = pd.read_csv(path+"/"+fileID)
 
             df = data_cleaning(df)
             
@@ -72,7 +72,7 @@ class LinearRegression(Resource):
             return False
         d = dirname(dirname(abspath(__file__)))
         path = os.path.join(d, PATH)
-        df = pd.read_csv(path+"\\"+fileID)
+        df = pd.read_csv(path+"/"+fileID)
         df = data_cleaning(df)
         
         optionList=''
