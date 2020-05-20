@@ -28,7 +28,7 @@ class Logout extends Component {
             return <Redirect to="/signin" push={true}/>
         }
         return(
-            <Button onClick={this.logout}> Log out </Button>
+            <Button  variant="contained" onClick={this.logout}> Log out </Button>
         ) 
 
     

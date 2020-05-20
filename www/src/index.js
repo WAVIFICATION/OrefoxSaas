@@ -12,6 +12,7 @@ import Projects from './projects'
 import PasswordReset from './ResetPassword'
 import EmailValidation from './EmailValidation'
 import FAQ from './FAQ';
+import Dash from './orefoxDash';
 
 
 
@@ -30,6 +31,7 @@ const routing = (
     <Route path="/PasswordReset" component={PasswordReset}/>
     <Route path='/EmailValidation' component={EmailValidation}/>
     <Route path='/FAQ' component={FAQ}/>
+    <Route path='/OrefoxDash' component={Dash}/>
     </Router>
   </div>
   
