@@ -21,7 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from "@material-ui/core/styles";
-
+import axios from 'axios';
 
 
 const styles = theme => ({
@@ -54,7 +54,8 @@ const styles = theme => ({
   class FileForm extends Component{
     constructor(props){
       super(props)
-      this.state={open:false,files:[],selection:null,ProjectName:"",fullWidth:true,maxWidth:'',projectData:[],name:[]}
+      this.state={open:false,file:[],selection:null,ProjectName:"",fullWidth:true,maxWidth:'',projectData:[],name:[], value: true};
+      // this.state={value: true};
     }
 
 
@@ -80,29 +81,46 @@ const styles = theme => ({
         this.setState({fullWidth:event.target.checked});
       };
     
-      handleSave=(files)=> {
-        //Saving files to state for further use and closing Modal.
-        this.setState({files:files})
-        this.setState({open:true});
-    }
+    //   handleSave=(files)=> {
+    //     //Saving files to state for further use and closing Modal.
+    //     this.setState({file:files})
+    //     this.setState({open:true});
+    // }
   
     onChangeHandler=(event)=>{
-      this.setState({selection:event.target.files[0]})
+      this.setState({file:event.target.files[0]})
       console.log(event.target.files[0])
+    }
+    selection=(event)=>{
+      event.preventDefault();
+      this.setState({value: event.target.value});
+      // console.log(this.state.value);
+    }
+    upload=(event)=>{
+      console.log('upload');
+      const data = new FormData();
+      data.append('file', this.state.file);
+      axios.post("/api/UploadFile/"+this.state.value, data, { 
+      // receive two    parameter endpoint url ,form data
+      }).then(res => { // then print response status
+        console.log(res)
+    });
+    this.setState({open:false});;
     }
   
 
     componentDidMount() {
-      fetch('/api/ListProjectFiles')
+      fetch('/api/ListProjects')
         .then(response => response.json())
-        .then(data => {this.setState({ projectData:data });console.log(this.state.projectData)});
+        .then(data => {console.log(data);this.setState({ projectData:data.Projects });console.log(this.state.projectData)});
         //this.projectData.map(name=>name.ProjectName)
       }
       render(){
+        // const { projectData } = this.state;
         const { classes } = this.props;
         return(
           <div>
-        <Tooltip title="Add New Project" aria-label="add" onClick={this.handleClickOpen}>
+        <Tooltip title="Add New File" aria-label="add" onClick={this.handleClickOpen}>
         <Fab variant="extended" size="small">
           <AddIcon className={classes.extendedIcon} />
             File Upload
@@ -118,15 +136,13 @@ const styles = theme => ({
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="Project Name">Project Name</InputLabel>
               <Select
-                autoFocus
-                onChange={this.handleMaxWidthChange}
-                inputProps={{
-                  name: 'Project Name',
-                  id: 'Project Name',
-                }}
+                // autoFocus
+                // onChange={this.handleMaxWidthChange}
+                onChange={this.selection}
               >
-                <MenuItem>{this.name}</MenuItem>  
-          })}
+              {this.state.projectData.map((row) => (
+                <option value={row} >{row}</option>  
+                ))}
 
               </Select>
               <DialogContentText className={classes.dialogtext}>
@@ -143,7 +159,7 @@ const styles = theme => ({
             Cancel
           </Button>
           {/* <Link to="/"> */}
-          <Button onClick={this.handleOpen} color="primary">
+          <Button onClick={this.upload} color="primary">
             Confirm
           </Button>
           {/* </Link> */}
