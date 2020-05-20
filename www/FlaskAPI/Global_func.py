@@ -162,3 +162,25 @@ class Database:
             return False
         else:
             return True
+    def add_feedback(self, uid, feedback):
+        rows=self.cur.execute("INSERT INTO Feedback (FeedbackBody , Uid) VALUES ('{}','{}');".format(
+            feedback, uid))
+        self.con.commit()
+        if rows==0:
+            return False
+        return True
+    def admin_list_project_files(self):
+        row_count = self.cur.execute("SELECT OriginalName, ProjectName, email FROM ((Project INNER JOIN Files ON Files.ProjectID = Project.ProjectID) INNER JOIN UserData ON UserData.id = Project.Uid);")
+        self.con.commit()
+        result = self.cur.fetchall()
+        return result
+    def admin_list_feedbacks(self):
+        row_count = self.cur.execute("SELECT FeedbackBody, email FROM (Feedback INNER JOIN UserData ON Feedback.Uid = UserData.id);")
+        self.con.commit()
+        result = self.cur.fetchall()
+        return result
+    def admin_number_of_projects(self):
+        row_count = self.cur.execute("SELECT COUNT(*) AS Number_Projects FROM Project;")
+        self.con.commit()
+        result = self.cur.fetchall()
+        return result

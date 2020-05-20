@@ -1,9 +1,10 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
-from FlaskAPI.UserLoginAPIs import SignUp, TestAPI, SignIn, CheckSignIn, password_recovery_api_endpoint, ResetPassword, SignOut
+from FlaskAPI.UserLoginAPIs import SignUp, TestAPI, SignIn, CheckSignIn, password_recovery_api_endpoint, ResetPassword, SignOut, Feedback
 from FlaskAPI.ProjectAPIs import CreateProject, ListProjects, UploadFile, ListFiles, DownloadFile, ListProjectFiles, ListReports, ViewReport
 from flask_mail import Mail, Message
-from FlaskAPI.AnalyticsAPIs import AnalyticsAPI
+from FlaskAPI.AnalyticsAPIs import AnalyticsAPI, LinearRegression
+from FlaskAPI.PrivateDashboard import ListFeedbacks, ListUserProjects, NumberOfProjects
 from flask_cors import CORS
 app = Flask(__name__)
 api = Api(app)
@@ -53,6 +54,11 @@ api.add_resource(ListProjectFiles, '/api/ListProjectFiles')
 api.add_resource(ListReports, '/api/ListReports')
 api.add_resource(ViewReport, '/api/ViewReport/<string:imageName>')
 api.add_resource(SignOut, '/api/SignOut')
+api.add_resource(Feedback, '/api/Feedback')
+api.add_resource(LinearRegression, '/api/Analytic/LinearRegression/<string:ProjectName>/<string:FileName>')
+api.add_resource(ListFeedbacks, '/api/private/ListFeedbacks')
+api.add_resource(ListUserProjects, '/api/private/ListUserProjects')
+api.add_resource(NumberOfProjects, '/api/private/NumberOfProjects')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
