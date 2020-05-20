@@ -65,10 +65,16 @@ const styles = theme => ({
       
     };
     handleOpen = (e) => {
+      fetch('/api/ListProjects')
+        .then(response => response.json())
+        .then(data => {console.log(data);this.setState({ projectData:data.Projects });console.log(this.state.projectData)});
       this.setState({open:true});
       
     };
     handleClickOpen = () => {
+      fetch('/api/ListProjects')
+        .then(response => response.json())
+        .then(data => {console.log(data);this.setState({ projectData:data.Projects });console.log(this.state.projectData)});
       this.setState({open:true});
       console.log(this.state.open)
     };
