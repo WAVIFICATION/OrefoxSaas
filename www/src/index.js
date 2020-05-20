@@ -22,8 +22,6 @@ const routing = (
     <Router>
     
     <Route exact path="/" component={App} />
-    <Route path="/services" component={Services} />
-    <Route path="/signin" component={Signin} />
     <Route path="/signin" component={Signin} />
     <Route path="/signup" component={Signup}/>
     <Route path="/projects" component={Projects}/>
