@@ -15,8 +15,7 @@ import Container from '@material-ui/core/Container';
 import  { Redirect } from 'react-router-dom'
 import Projects from './projects'
 import { withStyles } from "@material-ui/core/styles";
-import EmailValidation from "./EmailValidation";
-
+import * as QueryString from "query-string"
 
 function Copyright() {
   return (
@@ -54,7 +53,7 @@ const styles = theme => ({
 
 
 
-class Signin extends Component{
+class PasswordReset extends Component{
   constructor (props){
     super(props)
     this.state={tosignin: false,errormsg:"",email:"",password:""}
@@ -68,8 +67,8 @@ class Signin extends Component{
     
       handleSubmit = event => {
         event.preventDefault()
-        const url = "/api/SignIn"
-        const data={email:this.state.email,password:this.state.password}
+        const url = "/api/ResetPassword"
+        const data={password:this.state.password,rand_str:QueryString.parse(this.props.location.search).Randstr}
           fetch(url, { 
             method: "POST", 
             // credentials: "include",
@@ -89,9 +88,14 @@ class Signin extends Component{
     
 
   render(){
+    //   console.log(this.props)
+    //   const {params}= this.props;
+    //   const {id}=params;
+    const params = QueryString.parse(this.props.location.search);
+    console.log(params.Randstr)
     const { classes } = this.props;
     if (this.state.tosignin === true) {
-      return <Redirect to='/projects' />}
+      return <Redirect to='/signin' />}
 
       return(
         <Container component="main" maxWidth="xs">
@@ -101,21 +105,9 @@ class Signin extends Component{
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+        Reset password: Stage 2 
         </Typography>
         <div className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={this.handleChange}
-          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -128,10 +120,6 @@ class Signin extends Component{
             autoComplete="current-password"
             onChange = {this.handleChange}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -140,20 +128,9 @@ class Signin extends Component{
             className={classes.submit}
             onClick = {this.handleSubmit}
             > 
-            Sign In
+            reset password
           </Button>
-          <Grid container>
-            <Grid item xs>
-               
-      <a href="/EmailValidation">Forgot Password &nbsp;&nbsp;</a>
-              
-            </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          
         </div>
       </div>
       <Box mt={8}>
@@ -164,5 +141,5 @@ class Signin extends Component{
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Signin);
+export default withStyles(styles, { withTheme: true })(PasswordReset);
 

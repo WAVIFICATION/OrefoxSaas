@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import  { Redirect } from 'react-router-dom'
 import Signin from './signin'
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -52,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
 export default class Signup extends Component{
   constructor(props){
     super(props)
-    
-    this.classes = makeStyles((theme) => ({
+
+    this.state = makeStyles((theme) => ({
       paper: {
         marginTop: theme.spacing(8),
         display: 'flex',
@@ -65,7 +66,7 @@ export default class Signup extends Component{
         backgroundColor: theme.palette.secondary.main,
       },
       form: {
-        width: '100%',
+        width: '100%', 
         marginTop: theme.spacing(3),
       },
       submit: {
@@ -75,10 +76,11 @@ export default class Signup extends Component{
     
     this.state={firstname:"",lastname:"",company:"",password:"", email:"" }
     this.state={tosignin: false,errormsg:""}
-  }
+  } 
     handleChange = event =>{
     this.setState({ [event.target.name]:event.target.value })
     }
+
     handleSubmit = event =>{
     event.preventDefault();
 
@@ -90,7 +92,7 @@ export default class Signup extends Component{
     const url = "http://54.252.132.199/api/SignUp"
     const data = { fname:this.state.firstName, lname:this.state.lastName, company:this.state.company, password:this.state.password,
       email:this.state.email }
-    fetch("https://cors-anywhere.herokuapp.com/"+url, { 
+    fetch(url, { 
     method: "POST", 
     body: JSON.stringify(data), 
     redirect:"follow",
@@ -103,25 +105,22 @@ export default class Signup extends Component{
   }else {this.setState(() => ({
     errormsg: "Incomplete"}));} })}
   
-  
 
   render(){
     if (this.state.tosignin === true) {
       return <Redirect to='/signin' />}
     return (
-      
-      
       <Container component="main" maxWidth="xs">
         
         <CssBaseline />
-        <div className={this.classes.paper}>
-          <Avatar className={this.classes.avatar}>
+        <div className={this.paper}>
+          <Avatar className={this.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={this.classes.form} noValidate>
+          <form className={this.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -188,8 +187,10 @@ export default class Signup extends Component{
               <h3>{this.state.errormsg}</h3>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={<Checkbox value="allowExtraEmails" color="primary"/>}
                   label="I agree to the T&C."
+                  
+                  
                 />
               </Grid>
             </Grid>
@@ -198,8 +199,8 @@ export default class Signup extends Component{
               fullWidth
               variant="contained"
               color="primary"
-              className={this.classes.submit}
-              onClick={this.handleSubmit}
+              className={this.submit}
+              onClick={this.handleSubmit}  
             >
               Sign Up
             </Button>

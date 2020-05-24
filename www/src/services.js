@@ -135,6 +135,9 @@ export default function Pricing() {
             <Link variant="button" color="textPrimary" href="#" className={classes.link}>
               Services
             </Link>
+            <Link variant="button" color="textPrimary" href="/FAQ" className={classes.link}>
+              FAQ
+            </Link>
           </nav>
           <Button href="#" color="primary" variant="outlined" className={classes.link}> 
           <Link href="/signin">Login</Link> 
