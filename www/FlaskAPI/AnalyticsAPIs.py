@@ -1,7 +1,7 @@
 from flask import jsonify, request, session, send_file, make_response
 from flask_restful import Resource, reqparse
 from .Global_func import Database, mustlist, CheckUser, generatefilename
-from .BasicAnalyticsLib import data_cleaning, correlation_maps, address_linear_regression, linear_regression
+from .BasicAnalyticsLib import data_cleaning, correlation_maps, address_linear_regression, linear_regression, dist_plot, kde_plot, pair_plot
 import os
 import string
 from pathlib import Path
@@ -12,7 +12,10 @@ PATH = 'Project_and_user_Files'
 REPORT_PATH='Reports'
 operationMapping={
     "correlation_map": correlation_maps,
-    "linear_regression": address_linear_regression
+    "linear_regression": address_linear_regression,
+    "dist_plot": dist_plot,
+    "kde_plot": kde_plot,
+    "pair_plot": pair_plot
 }
 
 class AnalyticsAPI(Resource):
@@ -40,13 +43,31 @@ class AnalyticsAPI(Resource):
                 result, category =operationMapping[json_data['operation']](df)
             else: 
                 return False
-            if category== 'plot':#plot specific
+            if category == 'heatmap':#plot specific
                 path = os.path.join(d, REPORT_PATH)
                 new_file_name=generatefilename(path, 30, ".png")
                 result.savefig(os.path.join(path, new_file_name), format='png')
                 new_file_name='/api/ViewReport/'+new_file_name
             elif category == 'url':
                 new_file_name=result+'/'+json_data['projectName']+'/'+json_data['fileName']
+            elif category == 'dist_plot':
+                path = os.path.join(d, REPORT_PATH)
+                new_file_name=generatefilename(path, 30, ".png")
+                result.savefig(os.path.join(path, new_file_name), format='png')
+                new_file_name='/api/ViewReport/'+new_file_name
+            elif category == 'kde_plot':
+                path = os.path.join(d, REPORT_PATH)
+                new_file_name=generatefilename(path, 30, ".png")
+                result.savefig(os.path.join(path, new_file_name), format='png')
+                new_file_name='/api/ViewReport/'+new_file_name
+            elif category == 'pair_plot':
+                path = os.path.join(d, REPORT_PATH)
+                new_file_name=generatefilename(path, 30, ".png")
+                result.savefig(os.path.join(path, new_file_name), format='png')
+                new_file_name='/api/ViewReport/'+new_file_name
+                
+            
+                
             # try:
             db = Database()
             db.save_to_db_report(json_data['projectName'],fileID,session['uid'],json_data['operation'],new_file_name)
