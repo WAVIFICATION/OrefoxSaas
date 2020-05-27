@@ -1,7 +1,7 @@
 from flask import jsonify, request, session, send_file, make_response
 from flask_restful import Resource, reqparse
 from .Global_func import Database, mustlist, CheckUser, generatefilename
-from .BasicAnalyticsLib import data_cleaning, correlation_maps, address_linear_regression, linear_regression
+from .BasicAnalyticsLib import data_cleaning, correlation_maps, address_linear_regression, linear_regression, kde_plot, address_kde_plot
 import os
 import string
 from pathlib import Path
@@ -12,7 +12,8 @@ PATH = 'Project_and_user_Files'
 REPORT_PATH='Reports'
 operationMapping={
     "correlation_map": correlation_maps,
-    "linear_regression": address_linear_regression
+    "linear_regression": address_linear_regression,
+    "kde_plot": address_kde_plot
 }
 
 class AnalyticsAPI(Resource):
@@ -83,6 +84,8 @@ class LinearRegression(Resource):
             image_src='<img src="data:image/png;base64,'+linear_regression(X,Y,df).decode('utf-8')+'" alt="img" />'
         return make_response("""
         <html>
+        Selects elements for the Linear regression plot for elements:
+        <br/>
         <form action="/api/Analytic/LinearRegression/"""+ProjectName+'/'+FileName+"""" method="get" >
             X=
             <select id="x" name="x">
@@ -90,6 +93,54 @@ class LinearRegression(Resource):
             </select>
             Y=
             <select id="y" name="y">
+            """+optionList+"""
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+        """+image_src+"""
+        </html>""")
+
+class KdePlot(Resource):
+    def get(self, ProjectName, FileName):
+        # return 'hai'
+        X = request.args.get('x')
+        Y = request.args.get('y')
+        Z = request.args.get('z')
+        headers = {'Content-Type': 'text/html'} 
+        try:
+            db = Database()
+            fileID=db.is_User_Allowed_To_Access_File(ProjectName, FileName, session['uid'])
+            db.end_connection()
+        except:
+            return False
+        if fileID==False:
+            return False
+        d = dirname(dirname(abspath(__file__)))
+        path = os.path.join(d, PATH)
+        df = pd.read_csv(path+"/"+fileID)
+        df = data_cleaning(df)
+        
+        optionList=''
+        image_src=''
+        for i in list(df.columns.values):
+            optionList+='<option value="'+i+'">'+i+'</option>'
+        if X != None:
+            image_src='<img src="data:image/png;base64,'+kde_plot(X,Y,Z,df).decode('utf-8')+'" alt="img" />'
+        return make_response("""
+        <html>
+        Selects elements for the KDE plot for depth analysis:
+        <br/>
+        <form action="/api/Analytic/KdePlot/"""+ProjectName+'/'+FileName+"""" method="get" >
+            X=
+            <select id="x" name="x">
+            """+optionList+"""
+            </select>
+            Y=
+            <select id="y" name="y">
+            """+optionList+"""
+            </select>
+            Z=
+            <select id="z" name="z">
             """+optionList+"""
             </select>
             <input type="submit" value="Submit">
