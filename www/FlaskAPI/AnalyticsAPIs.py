@@ -131,15 +131,15 @@ class KdePlot(Resource):
         Selects elements for the KDE plot for depth analysis:
         <br/>
         <form action="/api/Analytic/KdePlot/"""+ProjectName+'/'+FileName+"""" method="get" >
-            X=
+            Element 1=
             <select id="x" name="x">
             """+optionList+"""
             </select>
-            Y=
+            Element 2=
             <select id="y" name="y">
             """+optionList+"""
             </select>
-            Z=
+            Element 3=
             <select id="z" name="z">
             """+optionList+"""
             </select>
