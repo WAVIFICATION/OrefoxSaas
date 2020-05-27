@@ -140,6 +140,9 @@ class ProjectTable extends Component {
               <Button onClick={() =>this.apiCall(row.ProjectName,row.File, 'linear_regression')}>
               Linear Regression
               </Button>
+              <Button onClick={() =>this.apiCall(row.ProjectName,row.File, 'kde_plot')}>
+              KdePlot
+              </Button>
               </TableCell>
             </TableRow>
           ))}
