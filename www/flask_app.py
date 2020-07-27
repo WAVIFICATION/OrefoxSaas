@@ -15,7 +15,7 @@ app.config.update(
 	MAIL_PORT=465,
 	MAIL_USE_SSL=True,
 	MAIL_USERNAME = 'orefoxsaas@yandex.com',
-	MAIL_PASSWORD = 'Project123',
+	MAIL_PASSWORD = 'P123',
     #SESSION_COOKIE_SAMESITE = 'None',
     SESSION_REFRESH_EACH_REQUEST = True,
     SESSION_COOKIE_NAME= 'Orefox',
